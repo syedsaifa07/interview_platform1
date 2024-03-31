@@ -5,11 +5,11 @@ Video chat application built using WebRTC and Socket.IO. It allows users(intervi
 
 ## Tech Stack
 
-**Client:** React.js
-Chakra UI
-Socket.IO Client
-Yjs
-Axios
+**Client:** React.js,
+Chakra UI,
+Socket.IO Client,
+Yjs,
+Axios,
 SyncedStore
 
 **Server:** Node.js
