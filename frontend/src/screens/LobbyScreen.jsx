@@ -13,6 +13,7 @@ import {
   FormLabel,
   Heading,
   Input,
+  Link,
   Text,
 } from "@chakra-ui/react";
 import PropTypes from "prop-types"; // Import PropTypes
@@ -67,7 +68,7 @@ function LobbyScreen() {
           borderWidth="1px"
           borderRadius="lg"
           boxShadow="1px 1px 3px rgba(0,0,0,0.3)"
-          mb={150}
+          mb={10}
         >
           <FormLabel> Email Id</FormLabel>
           <Input
@@ -93,6 +94,15 @@ function LobbyScreen() {
             </Button>
           </Center>
         </FormControl>
+        <Text fontSize="medium" color="white">
+          Made with ❤️ by{" "}
+          <Link
+            color="green.100"
+            href="https://www.linkedin.com/in/shivam-bhushan/"
+          >
+            Shivam
+          </Link>
+        </Text>
       </Flex>
     </>
   );
