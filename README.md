@@ -66,13 +66,10 @@ Once the client opens:
 - Voilà! both peers are connected
 - Now you can use the code editor and the run the output and they will run in sync as well
 
-## Run On CodeSandbox
+## Run On StackBlitz
 
-1. Go to https://github.com/shivam-bhushan/interview_platform1.git and fork repo
-2. Open codesandbox.io and login with github (authorise access to your public repos when asked)
-3. Click on "Repository" button on the top right of CodeSandbox dashboard
-4. Click on "interview_platform1" (the repo you forked)
-5. Open Terminal instace run:
+1. Go to https://stackblitz.com/~/github.com/shivam-bhushan/interview_platform1 
+2. Open Terminal instace and run:
 ```bash
   cd backend && npm install
 
@@ -82,22 +79,19 @@ Then:
   npm start
 
 ```
-6. This will open a tab on the right. Copy the web address of the tab (eg. https://9pyhpn-8000.csb.app)
 
-7. From file explorer on the left, open "/frontend/src/context/SocketProvider" and paste the web address in place of "http://localhost:8000" and save file
-
-6. Open another terminal
+3. Open another terminal
 ```bash
   cd frontend && npm install
 ```
 
-Start the client:
+4. Start the client:
 
 ```bash
   npm run dev
 ```
 
-Once you open the client:
+5. Once you open the client:
 
 - Open 2 seperate instances of client
 - In the first instance
