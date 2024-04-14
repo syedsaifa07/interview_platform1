@@ -8,14 +8,12 @@ import LanguageSelector from "./LanguageSelector";
 import { Box, HStack } from "@chakra-ui/react";
 import { CODE_SNIPPETS } from "../../constants";
 import Output from "./Output";
-import { langStore } from "../../store";
 import { useSyncedStore } from "@syncedstore/react";
 import { store, connect, disconnect } from "../../store";
 
 const CodeEditor = () => {
   const [language, setLanguage] = useState("python");
   const [value, setValue] = useState(null);
-  const langState = useSyncedStore(langStore);
 
   useEffect(() => {
     connect();
