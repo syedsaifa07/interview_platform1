@@ -12,12 +12,15 @@ import {
   FormHelperText,
   FormLabel,
   Heading,
+  Image,
   Input,
   Link,
   Text,
+  VStack,
 } from "@chakra-ui/react";
 import PropTypes from "prop-types"; // Import PropTypes
 import { Room } from "y-webrtc";
+import { Users } from "lucide-react";
 
 function LobbyScreen() {
   const [email, setEmail] = useState("");
@@ -50,61 +53,85 @@ function LobbyScreen() {
   }, [socket, handleJoinRoom]);
 
   return (
-    <>
-      <Flex
-        height="100vh"
+    <Flex minHeight="100vh">
+      {/* Left side */}
+      <Box
+        width="50%"
+        bg="purple.800"
+        color="white"
+        p={8}
+        position="relative"
+        minHeight="100vh"
+        display="flex"
         justifyContent="center"
         alignItems="center"
-        flexDirection="column"
       >
-        <Box textAlign="center" mb={5}>
-          <Heading>Join Room</Heading>
-        </Box>
-        <FormControl
-          onSubmit={handleSubmit}
-          as="form"
-          width="350px"
-          p={4}
-          borderWidth="1px"
-          borderRadius="lg"
-          boxShadow="1px 1px 3px rgba(0,0,0,0.3)"
-          mb={10}
+        <Image
+          src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+          alt="Background"
+          position="absolute"
+          top={0}
+          left={0}
+          right={0}
+          bottom={0}
+          objectFit="contain"
+          opacity={0.1}
+        />
+        <VStack
+          spacing={6}
+          align="flex-start"
+          position="relative"
+          zIndex={1}
+          maxWidth="80%"
         >
-          <FormLabel> Email Id</FormLabel>
-          <Input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <FormLabel mt={5}>Room Number</FormLabel>
-          <Input
-            type="text"
-            value={room}
-            onChange={(e) => setRoom(e.target.value)}
-          />
-          <Center>
-            <Button
-              width="60%"
-              height="40px"
-              colorScheme="green"
-              mt={7}
-              type="submit"
-            >
-              Join
-            </Button>
-          </Center>
-        </FormControl>
-        <Text fontSize="medium" color="white">
-          Made with ❤️ by{" "}
-          <Link
-            color="green.100"
-            href="https://www.linkedin.com/in/shivam-bhushan/"
-          >
-            Shivam
-          </Link>
-        </Text>
+          <Users size={48} />
+          <Heading as="h1" size="2xl" shadow={100}>
+            InterviewPro
+          </Heading>
+          <Text fontSize="xl">
+            Elevate your hiring process with our cutting-edge interview
+            platform. Connect with top talent and make informed decisions
+            effortlessly.
+          </Text>
+        </VStack>
+      </Box>
+
+      {/* Right side */}
+      <Flex width="50%" alignItems="center" justifyContent="center">
+        <VStack
+          as="form"
+          onSubmit={handleSubmit}
+          spacing={6}
+          width="80%"
+          maxWidth="400px"
+        >
+          <Heading as="h2" size="xl" textAlign="center">
+            Join Room
+          </Heading>
+          <FormControl>
+            <FormLabel>Email</FormLabel>
+            <Input
+              placeholder="Enter your email"
+              size="lg"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </FormControl>
+          <FormControl>
+            <FormLabel>Room Number</FormLabel>
+            <Input
+              placeholder="Enter room number"
+              size="lg"
+              value={room}
+              onChange={(e) => setRoom(e.target.value)}
+            />
+          </FormControl>
+          <Button type="submit" colorScheme="purple" size="lg" width="100%">
+            Join
+          </Button>
+        </VStack>
       </Flex>
-    </>
+    </Flex>
   );
 }
 

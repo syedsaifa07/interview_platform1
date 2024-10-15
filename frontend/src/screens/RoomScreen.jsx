@@ -1,10 +1,25 @@
+/* eslint-disable react/no-unescaped-entities */
 /* eslint-disable no-unused-vars */
 import React, { useCallback, useEffect, useState } from "react";
 import { useSocket } from "../context/SocketProvider";
 import ReactPlayer from "react-player";
-import { Box, Button, Flex, HStack, Heading } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Flex,
+  Grid,
+  GridItem,
+  HStack,
+  Heading,
+  Icon,
+  Text,
+  Tooltip,
+  VStack,
+  useColorModeValue,
+} from "@chakra-ui/react";
 import peer from "../services/peer";
 import CodeEditor from "../components/codeeditor/CodeEditor.jsx";
+import { Phone, Send, Video } from "lucide-react";
 
 function RoomScreen() {
   const socket = useSocket();
@@ -15,6 +30,8 @@ function RoomScreen() {
   const [remoteStreamReceived, setRemoteStreamReceived] = useState(false);
   const [myStreamShared, setMyStreamShared] = useState(false);
   const [connected, setConnected] = useState(false);
+  const bgColor = useColorModeValue("gray.50", "gray.800");
+  const borderColor = useColorModeValue("gray.200", "gray.600");
 
   const handleUserJoined = useCallback(({ email, id }) => {
     console.log(`${email} has joined`);
@@ -129,60 +146,108 @@ function RoomScreen() {
   ]);
 
   return (
-    <HStack>
-      <Flex
-        height="100vh"
-        w="15vw"
-        justifyContent="center"
-        alignItems="center"
-        flexDirection="column"
-      >
-        <Heading fontSize="x-large" mb={5}>
-          {connected
-            ? "Connected"
-            : remoteSocketId
-            ? `User 2 has joined`
-            : "No one in room"}
-        </Heading>
-        {isFirstUser && myStream && !myStreamShared && (
-          <Button colorScheme="blue" onClick={sendStreams}>
-            Send Stream
-          </Button>
-        )}
-        {!isFirstUser && remoteSocketId && !remoteStreamReceived && (
-          <Button w={100} colorScheme="green" onClick={handleCallUser}>
-            Call
-          </Button>
-        )}
-        {myStream && (
-          <>
-            {/* <Heading fontSize="medium">My Stream</Heading> */}
-            <ReactPlayer
-              playing
-              muted
-              width="300px"
-              height="300px"
-              url={myStream}
-            ></ReactPlayer>
-          </>
-        )}
-        {remoteStream && (
-          <>
-            {/* <Heading>Remote Stream</Heading> */}
-            <ReactPlayer
-              playing
-              muted
-              width="300px"
-              height="300px"
-              url={remoteStream}
-            ></ReactPlayer>
-          </>
-        )}
-      </Flex>
-      <Box w="100vw">
-        <CodeEditor />
-      </Box>
-    </HStack>
+    <Grid templateColumns="300px 1fr" height="100vh">
+      <GridItem bg={bgColor} borderRight="1px" borderColor={borderColor}>
+        <VStack spacing={6} p={4} height="100%">
+          <Heading size="md" textAlign="center">
+            Interview Room
+          </Heading>
+          <Box>
+            <Text fontSize="sm" mb={2} textAlign="center">
+              {connected ? (
+                "Connected"
+              ) : remoteSocketId ? (
+                "User 2 has joined"
+              ) : (
+                <>
+                  Waiting for another user to join... <br />
+                  Please ask User 2 to join the same room
+                </>
+              )}
+            </Text>
+            {!connected && (
+              <Flex justifyContent="center">
+                {isFirstUser && myStream && !myStreamShared && (
+                  <Tooltip label="Send your video stream">
+                    <Button
+                      leftIcon={<Icon as={Send} />}
+                      colorScheme="blue"
+                      onClick={sendStreams}
+                    >
+                      Send Stream
+                    </Button>
+                  </Tooltip>
+                )}
+                {!isFirstUser && remoteSocketId && !remoteStreamReceived && (
+                  <Tooltip label="Start the call">
+                    <Button
+                      leftIcon={<Icon as={Phone} />}
+                      colorScheme="green"
+                      onClick={handleCallUser}
+                    >
+                      Call
+                    </Button>
+                  </Tooltip>
+                )}
+              </Flex>
+            )}
+          </Box>
+          <Flex
+            direction="column"
+            alignItems="center"
+            flex={1}
+            justifyContent="center"
+            width="100%"
+          >
+            {myStream && (
+              <Box mb={4} width="100%">
+                <Text fontSize="sm" mb={2} textAlign="center">
+                  Your Video
+                </Text>
+                <Box borderRadius="md" overflow="hidden">
+                  <ReactPlayer
+                    playing
+                    muted
+                    width="100%"
+                    height="auto"
+                    url={myStream}
+                  />
+                </Box>
+              </Box>
+            )}
+            {remoteStream && (
+              <Box width="100%">
+                <Text fontSize="sm" mb={2} textAlign="center">
+                  Interviewee's Video
+                </Text>
+                <Box borderRadius="md" overflow="hidden">
+                  <ReactPlayer playing width="100%" height="auto" />
+                  url={remoteStream}
+                </Box>
+              </Box>
+            )}
+          </Flex>
+          {!myStream && !remoteStream && (
+            <Flex
+              direction="column"
+              alignItems="center"
+              justifyContent="center"
+              flex={1}
+            >
+              <Icon as={Video} boxSize={12} color="gray.400" mb={4} />
+              <Text color="gray.500" textAlign="center">
+                No video streams yet
+              </Text>
+            </Flex>
+          )}
+        </VStack>
+      </GridItem>
+      <GridItem>
+        <Box height="100%" p={4}>
+          <CodeEditor />
+        </Box>
+      </GridItem>
+    </Grid>
   );
 }
 
